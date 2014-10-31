@@ -1,0 +1,31 @@
+<project name="bpmstudio" default="makeJAR" basedir=".">
+	<property name="src" value="src"/>
+	<property name="build" value="build"/>
+	<property name="dest" value="${build}/bin"/>
+	<property name="jar" value="${build}/bpmstudio.jar"/>
+	
+	<target name="makeJAR" depends="compile">
+		<jar destfile="${jar}" basedir="${dest}">
+			<manifest>
+				<attribute name="Main-Class" value="com.tjoris.bpmstudio.BpmStudioMain"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="${dest}"/>
+		<copy todir="${dest}">
+			<fileset dir="${src}">
+				<include name="**/*.png"/>
+			</fileset>
+		</copy>
+		<javac source="1.4" target="1.4" srcdir="${src}" destdir="${dest}"/>
+	</target>
+
+	<target name="makeJar-clean" depends="clean, makeJAR"/>
+	
+	<target name="clean">
+		<delete dir="${dest}"/>
+		<delete file="${jar}"/>
+	</target>	
+</project>
